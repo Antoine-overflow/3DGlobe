@@ -30,8 +30,22 @@ var material = new THREE.MeshPhongMaterial( {
 
 
 var terre = new THREE.Mesh( geometry, material );
-
 scene.add( terre );
+
+material = new THREE.MeshLambertMaterial({
+    color: 0x0992299});
+
+var stick = new THREE.Object3D();
+var point = new THREE.Vector3( 1, 1, 1 );
+stick.lookAt( point );
+terre.add( stick );
+
+var geometrySat = new THREE.BoxGeometry( 0.11, 0.18, 0.06); // Parameters for the size of "satellite"
+var mesh = new THREE.Mesh( geometrySat, material );
+var r = 3; // Parameter for the distance from the earth
+mesh.position.set( 0, 0, r ); 
+stick.add( mesh );    
+
 camera.position.z = 5;
 let controls = new THREE.OrbitControls( camera ,renderer.domElement);
 
