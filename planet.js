@@ -66,10 +66,9 @@ mesh.position.set( 0, 0, r );
 stick.add( mesh );    
 point.add(stick);
 
-createTrail(stick, 80, 0.8, 18, scene );
+// createTrail(stick, 80, 0.8, 18, scene );
 
 camera.position.z = 5;
-let controls = new THREE.OrbitControls( camera ,renderer.domElement);
 
 ///////////////////////////////
 //// creation des Nuages /////
@@ -114,7 +113,7 @@ function render() {
     point.rotateX(t);
     point.rotateY(t);
     // point.rotateZ(t);
-    updateTrails();
+    // updateTrails();
     controls.update();
     renderer.render( scene, camera );
 }
