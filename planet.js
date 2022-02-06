@@ -69,7 +69,6 @@ point.add(stick);
 createTrail(stick, 80, 0.8, 18, scene );
 
 camera.position.z = 5;
-let controls = new THREE.OrbitControls( camera ,renderer.domElement);
 
 ///////////////////////////////
 //// creation des Nuages /////
