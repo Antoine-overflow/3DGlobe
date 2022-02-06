@@ -130,7 +130,6 @@ function render() {
     point.rotateY(t);
     // point.rotateZ(t);
     // updateTrails();
-    // controls.update();
     renderer.render( scene, camera );
 }
 
