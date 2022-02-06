@@ -1,3 +1,6 @@
+import {GLTFLoader} from '/GLTFLoader.js';
+import { OrbitControls } from './OrbitControls.js';
+
 ///////////////////////////////
 //// creation de la scene /////
 ///////////////////////////////
@@ -32,7 +35,7 @@ var texture = new THREE.TextureLoader().load( "bump.jpg" );
 var material = new THREE.MeshPhongMaterial( { 
     map: fond_carte,
     shininess: 5,
-    emissive: new THREE.Color('blue'),
+    // emissive: new THREE.Color('blue'), //For the blue color of earth
     bumpMap :  texture,
     bumpScale :0.005,
     side: THREE.DoubleSide,
@@ -59,11 +62,24 @@ point.getWorldPosition(target);
 stick.lookAt( target );
 terre.add( point );
 
-var geometrySat = new THREE.BoxGeometry( 0.11, 0.18, 0.06); // Parameters for the size of "satellite"
-var mesh = new THREE.Mesh( geometrySat, material );
-var r = 1.5; // Parameter for the distance from the earth >1 for being in the sky
-mesh.position.set( 0, 0, r ); 
-stick.add( mesh );    
+// var geometrySat = new THREE.BoxGeometry( 0.11, 0.18, 0.06); // Parameters for the size of "satellite"
+// var mesh = new THREE.Mesh( geometrySat, material );
+
+var loader = new GLTFLoader();
+loader.load('./satellite/scene.gltf', function (gltf) { 
+    // console.log(gltf.scene);
+    var satelliteMesh = gltf.scene.getObjectByName('OSG_Scene');
+    // console.log(satelliteMesh);
+    // satelliteGeometry = new THREE.InstancedBufferGeometry(); 
+    // THREE.BufferGeometry.prototype.copy.call(satelliteGeometry, _satelitteMesh.geometry);
+
+    var r = 1.5; // Parameter for the distance from the earth >1 for being in the sky
+    satelliteMesh.scale.set(0.0001,0.0001,0.0001);
+    satelliteMesh.position.set( 0, 0, r ); 
+    stick.add( satelliteMesh );   
+});
+
+ 
 point.add(stick);
 
 // createTrail(stick, 80, 0.8, 18, scene );
@@ -114,12 +130,11 @@ function render() {
     point.rotateY(t);
     // point.rotateZ(t);
     // updateTrails();
-    controls.update();
     renderer.render( scene, camera );
 }
 
 // To control the earth 
-let controls = new THREE.OrbitControls( camera ,renderer.domElement);
+let controls = new OrbitControls( camera ,renderer.domElement);
 controls.enablePan = true;
 controls.enableZoom = true;
 controls.enableRotate = true;
