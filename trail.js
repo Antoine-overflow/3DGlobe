@@ -27,7 +27,7 @@ function createTrail( object, length, width, resolution, scene ) {
 
 	// trail geo
 
-	var geometry = new THREE.PlaneGeometry( width, length);
+	var geometry = new THREE.PlaneBufferGeometry( width, length);
 
 	var material = new THREE.MeshBasicMaterial( { color: 0xffffff, side: THREE.DoubleSide, wireframe: false, transparent: true, opacity: 0.2 } ); // opacity: 0.2
 	object.userData.trail.mesh = new THREE.Mesh( geometry, material );
@@ -55,12 +55,9 @@ function createTrail( object, length, width, resolution, scene ) {
 	// store vertices based on left or right
 
 	for ( var i = 0; i < object.userData.trail.trailVertices.length; i ++ ) {
-        console.log(object.userData.trail.trailVertices.length);
-        console.log(object.userData.trail.mesh.geometry.attributes.position);
-        console.log(object.userData.trail.mesh.geometry.attributes.position.array);
-        console.log(object.userData.trail.mesh.geometry.attributes.position.array.buffer);
-		object.userData.trail.trailVertices[i][0] = object.userData.trail.mesh.geometry.vertices[i*2];
-		object.userData.trail.trailVertices[i][1] = object.userData.trail.mesh.geometry.vertices[i*2+1];
+		console.log(object.userData.trail.mesh.geometry.attributes.position);
+		object.userData.trail.trailVertices[i][0] = object.userData.trail.mesh.geometry.attributes.position;
+		object.userData.trail.trailVertices[i][1] = object.userData.trail.mesh.geometry.attributes.position;
 
 	}
 
