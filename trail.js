@@ -54,12 +54,12 @@ function createTrail( object, length, width, resolution, scene ) {
 
 	// store vertices based on left or right
 
-	for ( var i = 0; i < object.userData.trail.trailVertices.length; i ++ ) {
-		console.log(object.userData.trail.mesh.geometry.attributes.position);
-		object.userData.trail.trailVertices[i][0] = object.userData.trail.mesh.geometry.attributes.position;
-		object.userData.trail.trailVertices[i][1] = object.userData.trail.mesh.geometry.attributes.position;
+	// for ( var i = 0; i < object.userData.trail.trailVertices.length; i ++ ) {
+	// 	console.log(object.userData.trail.mesh.geometry.attributes.position.array[i]);
+	// 	object.userData.trail.trailVertices[i][0] = object.userData.trail.mesh.geometry.attributes.position[Math.floor(i/2)];
+	// 	object.userData.trail.trailVertices[i][1] = object.userData.trail.mesh.geometry.attributes.position[Math.floor(i/2 + 1)];
 
-	}
+	// }
 
 }
 

@@ -52,7 +52,7 @@ material = new THREE.MeshLambertMaterial({
 
 var stick = new THREE.Object3D();
 
-var x=0; var y=0; var z=1; // coordinates where the satellite is above
+var x=0; var y=0; var z=0; // coordinates where the satellite is above
 var point = new THREE.Object3D();
 point.translateZ(z);
 
@@ -61,6 +61,9 @@ point.getWorldPosition(target);
 
 stick.lookAt( target );
 terre.add( point );
+
+// console.log(target);
+// scene.add(trail);
 
 // var geometrySat = new THREE.BoxGeometry( 0.11, 0.18, 0.06); // Parameters for the size of "satellite"
 // var mesh = new THREE.Mesh( geometrySat, material );
@@ -73,12 +76,47 @@ loader.load('./satellite/scene.gltf', function (gltf) {
     // satelliteGeometry = new THREE.InstancedBufferGeometry(); 
     // THREE.BufferGeometry.prototype.copy.call(satelliteGeometry, _satelitteMesh.geometry);
 
-    var r = 1.5; // Parameter for the distance from the earth >1 for being in the sky
+    var r = 1.155; // Parameter for the distance from the earth >1 for being in the sky
     satelliteMesh.scale.set(0.0001,0.0001,0.0001);
     satelliteMesh.position.set( 0, 0, r ); 
     stick.add( satelliteMesh );   
 });
 
+function Ktrail(k){
+    var res = [];
+    for(var i=0; i<k; i++){
+        var trail = new THREE.Object3D();
+        var op = 0.05 + 0.75/(i+1);
+        material = new THREE.MeshLambertMaterial({
+            color: 0x3794cf,
+            transparent: true, 
+            opacity: op});
+        var trailsGeom =  new THREE.PlaneGeometry( 0.1, 0.25/(k+1)); // Parameters for the size of "trail"
+        var trailMesh = new THREE.Mesh( trailsGeom, material );
+        var r = 1.155; // Parameter for the distance from the earth >1 for being in the sky
+        trailMesh.position.set(0,0.155*(i+1),r);
+        trail.add(trailMesh);
+
+        // console.log(target);
+        trail.lookAt( target );
+        res.push(trailMesh);
+        terre.add(trail);
+    }
+    return res;
+}
+
+var trail = new THREE.Object3D();
+material = new THREE.MeshLambertMaterial({
+    color: 0x0902009});
+var trailsGeom =  new THREE.PlaneGeometry( 0.11, 0.18); // Parameters for the size of "trail"
+var trailMesh = new THREE.Mesh( trailsGeom, material );
+var r = 1.155; // Parameter for the distance from the earth >1 for being in the sky
+trailMesh.position.set(0,0.155,r);
+trail.add(trailMesh);
+
+
+trail.lookAt( target );
+terre.add(trail);
  
 point.add(stick);
 
@@ -118,6 +156,9 @@ var fond = new THREE.Mesh( geometry_fond, material_fond);
 scene.add( fond )
 
 
+var K = 8;
+var res = Ktrail(K);
+
 // to actualize the Frame 
 function render() {
     requestAnimationFrame( render);
@@ -125,11 +166,23 @@ function render() {
     clouds.rotation.y +=0.0015;
     clouds.rotation.x +=0.0001;
 
-    var t = 0.005; // Variation of the satellite 
+    var t = 0.0015; // Variation of the satellite 
     point.rotateX(t);
-    point.rotateY(t);
+    point.rotateY(0.0001);
+    
+    // console.log(point.rotation);
     // point.rotateZ(t);
     // updateTrails();
+
+    // console.log(res);
+    for(var i=0; i<K; i++){
+        res[i].rotateX(t);
+        res[i].rotateY(0.0001);
+    }
+
+    trail.rotateX(t);
+    trail.rotateY(0.0001);
+
     renderer.render( scene, camera );
 }
 
