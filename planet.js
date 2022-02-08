@@ -69,10 +69,11 @@ var loader = new GLTFLoader();
 loader.load('./satellite/scene.gltf', function (gltf) { 
     var satelliteMesh = gltf.scene.getObjectByName('OSG_Scene');
 
-    var r = 1.155; // Parameter for the distance from the earth >1 for being in the sky
+    var r = 1.065; // Parameter for the distance from the earth >1 for being in the sky
     satelliteMesh.scale.set(0.0001,0.0001,0.0001);
     satelliteMesh.position.set( 0, 0, r ); 
     stick.add( satelliteMesh );   
+    stick.rotateZ(0.01);
 });
 
 
@@ -86,20 +87,20 @@ function Ktrail(k){
         var trail = new THREE.Object3D();
         var op = 1/Math.exp(0.05*i);
         material = new THREE.MeshLambertMaterial({
-            color: 0x8394cf,
+            color: 0x9900FF,
             transparent: true, 
             opacity: op});
-        var trailsGeom =  new THREE.PlaneGeometry( 0.05, 0.25/(k+1)); // Parameters for the size of "trail"
+        var trailsGeom =  new THREE.PlaneGeometry( 0.02, 0.35/(k+1)); // Parameters for the size of "trail"
         var trailMesh = new THREE.Mesh( trailsGeom, material );
-        var r = 1.155; // Parameter for the distance from the earth >1 for being in the sky
-        trailMesh.position.set(0,0.07+(0.25/(k+1))*i,r);
+        var r = 1.065; // Parameter for the distance from the earth >1 for being in the sky
+        trailMesh.position.set(0,0.065+(0.25/(k+1))*i,r);
         trail.add(trailMesh);
         res.push(trailMesh);
     }
     return res;
 }
 
-var K = 20;
+var K = 35;
 var res = Ktrail(K);
 const group = new THREE.Group();
 for(var i=0; i<K; i++){group.add(res[i])}
