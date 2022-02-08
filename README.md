@@ -5,7 +5,7 @@ A 3D globe using Three.js and tracing the ISS in a responsive and design way.
 
 ## Installation 
 
-{% filename %}git clone https://github.com/Antoine-overflow/3DGlobe.git{% endfilename %}
+$ git clone https://github.com/Antoine-overflow/3DGlobe.git
 
 
 {% filename %}cd 3DGLobe {% endfilename %}
