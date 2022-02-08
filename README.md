@@ -5,13 +5,18 @@ A 3D globe using Three.js and tracing the ISS in a responsive and design way.
 
 ## Installation 
 
-$ git clone https://github.com/Antoine-overflow/3DGlobe.git
+```bash
+git clone https://github.com/Antoine-overflow/3DGlobe.git
+```
 
+```bash
+cd 3DGLobe 
+```
 
-{% filename %}cd 3DGLobe {% endfilename %}
 
 
 Then run a local server, 
-for example : {% filename %} npx http-server{% endfilename %} ( npm required ) 
+for example : ```bash npx http-server```
+ ( npm required ) 
 
 and run src/test_planet.html 
