@@ -1,6 +1,6 @@
 
-import {GLTFLoader} from '/GLTFLoader.js';
-import { OrbitControls } from './OrbitControls.js';
+import {GLTFLoader} from '../module_three/GLTFLoader.js';
+import { OrbitControls } from '../module_three/OrbitControls.js';
 
 
 ///////////////////////////////
@@ -29,8 +29,8 @@ document.body.appendChild( renderer.domElement );
 ///////////////////////////////
 
 var geometry = new THREE.SphereGeometry( 0.5, 64, 64 );
-var fond_carte = new THREE.TextureLoader().load( "earth_4k.jpg" );
-var texture = new THREE.TextureLoader().load( "bump.jpg" );
+var fond_carte = new THREE.TextureLoader().load( "../images/earth_4k.jpg" );
+var texture = new THREE.TextureLoader().load( "../images/bump.jpg" );
 
 var material = new THREE.MeshPhongMaterial( { 
     map: fond_carte,
@@ -38,7 +38,7 @@ var material = new THREE.MeshPhongMaterial( {
     bumpMap :  texture,
     bumpScale :0.005,
     side: THREE.DoubleSide,
-    specularMap : new THREE.TextureLoader().load('specular.png'),
+    specularMap : new THREE.TextureLoader().load('../images/specular.png'),
     specular  : new THREE.Color('grey')
 } );
 
@@ -67,7 +67,7 @@ point.add(stick);
 ///////////////////////////////////////
 
 var loader = new GLTFLoader();
-loader.load('./satellite/scene.gltf', function (gltf) { 
+loader.load('../satellite/scene.gltf', function (gltf) { 
     var satelliteMesh = gltf.scene.getObjectByName('OSG_Scene');
 
     var r = 1.065; // Parameter for the distance from the earth >1 for being in the sky
@@ -115,7 +115,7 @@ scene.add(group);
 
 var geometry_cloud = new THREE.SphereGeometry(0.505, 64, 64)
 var material_cloud	= new THREE.MeshPhongMaterial({
-        map: new THREE.TextureLoader().load('cloud_white.png'),
+        map: new THREE.TextureLoader().load('../images/cloud_white.png'),
         transparent: true,
         
 } )
@@ -149,7 +149,7 @@ scene.add( ball );
 
 var geometry_fond = new THREE.SphereGeometry(200, 64, 64)
 var material_fond = new THREE.MeshBasicMaterial({
-    map: new THREE.TextureLoader().load('etoiles.png'),
+    map: new THREE.TextureLoader().load('../images/etoiles.png'),
     side: THREE.BackSide
 })
 
