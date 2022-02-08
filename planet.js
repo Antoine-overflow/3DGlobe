@@ -1,5 +1,7 @@
+
 import {GLTFLoader} from '/GLTFLoader.js';
 import { OrbitControls } from './OrbitControls.js';
+
 
 ///////////////////////////////
 //// creation de la scene /////
@@ -26,14 +28,13 @@ document.body.appendChild( renderer.domElement );
 //// creation de la Terre /////
 ///////////////////////////////
 
-var geometry = new THREE.SphereGeometry( 0.5, 32, 32 );
+var geometry = new THREE.SphereGeometry( 0.5, 64, 64 );
 var fond_carte = new THREE.TextureLoader().load( "earth_4k.jpg" );
 var texture = new THREE.TextureLoader().load( "bump.jpg" );
 
 var material = new THREE.MeshPhongMaterial( { 
     map: fond_carte,
     shininess: 5,
-    // emissive: new THREE.Color('blue'), //For the blue color of earth
     bumpMap :  texture,
     bumpScale :0.005,
     side: THREE.DoubleSide,
@@ -112,7 +113,7 @@ scene.add(group);
 ///////////////////////////////
 
 
-var geometry_cloud = new THREE.SphereGeometry(0.505, 32, 32)
+var geometry_cloud = new THREE.SphereGeometry(0.505, 64, 64)
 var material_cloud	= new THREE.MeshPhongMaterial({
         map: new THREE.TextureLoader().load('cloud_white.png'),
         transparent: true,
@@ -122,16 +123,33 @@ var material_cloud	= new THREE.MeshPhongMaterial({
 var clouds = new THREE.Mesh( geometry_cloud, material_cloud );
 scene.add( clouds )
 
+///////////////////////////////
+// creation de l'atmosphere ///
+///////////////////////////////
+
+
+var customMaterial = new THREE.ShaderMaterial( 
+	{
+	    uniforms: {  },
+		vertexShader:   document.getElementById( 'vertexShader'   ).textContent,
+		fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
+		side: THREE.BackSide,
+		blending: THREE.AdditiveBlending,
+		transparent: true
+	}   );
+		
+var ballGeometry = new THREE.SphereGeometry( 0.6, 50, 50);
+var ball = new THREE.Mesh( ballGeometry, customMaterial );
+scene.add( ball );
 
 
 ///////////////////////////////
 //// creation du Fond  /////
 ///////////////////////////////
 
-var geometry_fond = new THREE.SphereGeometry(90, 64, 64)
+var geometry_fond = new THREE.SphereGeometry(200, 64, 64)
 var material_fond = new THREE.MeshBasicMaterial({
-    color:  new THREE.Color('black'),
-
+    map: new THREE.TextureLoader().load('etoiles.png'),
     side: THREE.BackSide
 })
 
@@ -143,7 +161,7 @@ function render() {
     requestAnimationFrame( render);
     terre.rotation.y += 0.001;
     clouds.rotation.y +=0.0015;
-    clouds.rotation.x +=0.0001;
+   
 
     var t = 0.0015; // Variation of the satellite     
     group.rotateX(t);
@@ -157,8 +175,8 @@ let controls = new OrbitControls( camera ,renderer.domElement);
 controls.enablePan = true;
 controls.enableZoom = true;
 controls.enableRotate = true;
-controls.minDistance
-controls.maxDistance
+controls.minDistance = 1
+controls.maxDistance = 10
 controls.minPolarAngle
 controls.maxPolarAngle
 
