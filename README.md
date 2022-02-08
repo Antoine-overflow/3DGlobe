@@ -17,8 +17,10 @@ cd 3DGLobe
 
 Then run a local server, 
 for example :
+
 ```bash
-npx http-server```
+npx http-server
+```
  ( npm required ) 
 
 and run src/test_planet.html 
